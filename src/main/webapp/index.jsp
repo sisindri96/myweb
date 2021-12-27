@@ -1,81 +1,245 @@
-import java.util.Scanner;
-import java.util.Random;
-public class horsies {
-    public static void main (String[] args) 
-    {
-        Scanner input = new Scanner(System.in);
-        int money = 1000; //Set original $ to 1000
-        int r; //Declare variable for random number of horse to proceed
-        int races = 0; //Set total races to 0
-        int garfwins = 0; //Set Garfield's score to 0
-        int shaunwins = 0; //Set Shaun's score to 0
-        int chestwins = 0; //Set Chester's score to 0
-        int garf; //Declare Garfield's progress variable
-        int shaun; //Declare Shaun's progress variable
-        int chest; //Declare Chester's progress variable
-        String response; //Declare variable to get input on continuing game
-        String horse; //Declare variable to get input on horse
-        String track = "------------";
-        String trackgarf;
-        String trackshaun;
-        String trackchest;
-        int bet = 0;
-        do {
-            garf = 0;
-            shaun = 0;
-            chest = 0;
-            System.out.print ("You have $"+money+"\n");
-            System.out.print ("Hi, which horse would you like to bet on?\n");
-            System.out.print ("a. Garfield ("+garfwins+"/"+races+")\n");
-            System.out.print ("b. Shaun ("+shaunwins+"/"+races+")\n");
-            System.out.print ("c. Chester ("+chestwins+"/"+races+")\n");        
-            horse = input.next();
-            System.out.print ("How much do you want to bet?\n");
-            bet = input.nextInt();
-            if (bet <= 0) {
-                System.out.print ("Invalid bet.\n");
-            }
-            else {
-                while (garf<12 && shaun<12 && chest<12){
-                    r = (int) (Math.random()*3+1);
-                    if (r == 1) {
-                        garf++;
-                    } else if (r == 2) {
-                        shaun++;
-                    } else if (r == 3) {
-                        chest++;
-                    }
-                    System.out.print ("\n\n\n\n\n\n\n\n\n\n\n\n");
-                    trackgarf = track.substring(0, garf)+"1"; //Get Garf's progress on track
-                    trackshaun = track.substring(0, shaun)+"1"; //Get Shaun's progress on track
-                    trackchest = track.substring(0, chest)+"1"; //Get Chester's progress on track
-                    System.out.print (trackgarf+"\n");
-                    System.out.print (trackshaun+"\n");
-                    System.out.print (trackchest+"\n");
-                    System.out.print ("GAR:"+garf+"\nSHA:"+shaun+"\nCHE:"+chest+"\n");
-                    try {
-                          Thread.sleep(1000L);
-                            }
-                        catch (Exception j) {}
-                }
-            }
-            if (garf == 12 && horse == "a") {
-                System.out.print ("You earned $"+(2*bet));
-                money = money + (2 * bet);
-                System.out.print ("Total balance: $"+money);
-            } else if (shaun == 12 && horse == "b") {
-                System.out.print ("You earned $"+(2*bet));
-                money = money + (2 * bet);
-                System.out.print ("Total balance: $"+money);
-            } else if (chest == 12 && horse == "c") {
-                System.out.print ("You earned $"+(2*bet));
-                money = money + (2 * bet);
-                System.out.print ("Total balance: $"+money);
-            }
-            System.out.print ("Play again?\n");
-            response = input.next();
-
-        } while (money >= 0 && (response.equals("Yes")||response.equals("yes")));
-        input.close();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car game JavaScript</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;        
         }
-}
+        .hide{
+            display: none;
+        }
+        .car{
+            width: 50px;
+            height: 70px;
+            background-color: red;
+            position: absolute;
+            bottom: 120px;
+            background-image: url(Images/car.jpg);
+            background-size: cover;
+        }
+        .GameArea{
+            width: 400px;
+            height: 100vh;
+            background-color: rgb(29, 26, 26);
+            margin: auto;
+            position: relative;
+            overflow: hidden;
+            border-left: 10px dashed white;
+            border-right:10px dashed white;
+        }
+        .lines{
+            width: 10px;
+            height: 100px;
+            background: white;
+            position: absolute;
+            margin-left: 195px;
+        }
+        .CarGame{
+            background-image: url(Images/backgrass.png);
+            background-size: cover;
+
+        }
+        .other{
+            width: 50px;
+            height: 70px;
+            background-color: blue;
+            position: absolute;
+            bottom: 120px;
+        }
+        .Score{
+            position: absolute;
+            top: 15px;
+            left: 50px;
+            text-align: center;
+            padding-top: 23px;
+            font-size: 30px;
+            line-height: 20px;
+            background-color: rgba(34, 119, 8, 0.952);
+            color: white;
+            width: 300px;
+            height: 100px;
+            box-shadow: 0 0 20px 0px rgba(0,0,0,0.1);
+        }
+        .StartScreen{
+            position: absolute;
+            background-color: rgba(34, 119, 8, 0.952);
+            color: white;
+            z-index: 1;
+            margin-top: 210px;
+            margin-left:360px;
+            text-align: center;
+            box-shadow: 0 0 20px 0px rgba(0,0,0,0.1);
+            font-size: 30px;
+            width: 50%;
+            height: 200px;
+            cursor: pointer;
+            border-radius: 23px;
+
+        }
+        button{
+            padding: 10px;
+            text-align: center;
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="CarGame">
+        <div class="Score">
+
+        </div>
+        <div class="StartScreen">
+            <p>Start Game by clicking Here<br><br>Arrow Keys to move<br><br>If you hit another car you will loose</p>
+            <button onclick="Reset()">Reset Highest Score</button>
+        </div>
+        <div class="GameArea">
+
+        </div>
+    </div>       
+    <script>
+        const score=document.querySelector('.Score');
+        const startscreen=document.querySelector('.StartScreen');
+        const gamearea=document.querySelector('.GameArea');
+        let player={ speed:5,score:0};
+        let highest=0;
+        startscreen.addEventListener('click',start);
+
+        let keys={ArrowUp: false, ArrowDown: false, ArrowRight: false, ArrowLeft: false};
+
+        document.addEventListener('keydown',keyDown);
+        document.addEventListener('keyup',keyUp);
+        function keyDown(ev){
+            ev.preventDefault();
+            keys[ev.key]=true;
+
+        }
+        function keyUp(ev){
+            ev.preventDefault();
+            keys[ev.key]=false;
+            
+        }
+        function isCollide(a,b){
+            aRect=a.getBoundingClientRect();
+            bRect=b.getBoundingClientRect();
+
+            return !((aRect.bottom<bRect.top)||(aRect.top>bRect.bottom)||(aRect.right<bRect.left)||(aRect.left>bRect.right));
+        }
+        function moveLines(){
+            let lines=document.querySelectorAll('.lines');
+            lines.forEach(function(item){
+                if(item.y>=700){
+                    item.y-=750;
+                }
+                item.y+=player.speed;
+                item.style.top=item.y+'px';
+
+            })
+        }
+        function endGame(){
+            player.start=false;
+            startscreen.classList.remove('hide');
+        }
+        function moveCar(car){
+            let other=document.querySelectorAll('.other');
+            other.forEach(function(item){
+                if(isCollide(car,item)){
+                    console.log('HIT');
+                    endGame();
+                }
+                if(item.y>=750){
+                    item.y=-300;
+                    item.style.left=Math.floor(Math.random()*350) + 'px';
+                }
+                item.y+=player.speed;
+                item.style.top=item.y+'px';
+
+            })
+        }
+        function gamePlay(){
+
+            let car=document.querySelector('.car');
+            let road=gamearea.getBoundingClientRect();
+
+            if(player.start){
+
+                moveLines();
+                moveCar(car);
+                if(keys.ArrowUp && player.y>(road.top+70)){
+                    player.y-=player.speed;
+                }
+                if(keys.ArrowDown && player.y<(road.bottom-70)){
+                    player.y+=player.speed;
+                }
+                if(keys.ArrowLeft && player.x>0){
+                    player.x-=player.speed;
+                }
+                if(keys.ArrowRight && player.x<(road.width-50)){
+                    player.x+=player.speed;
+                }
+
+                car.style.top=player.y + 'px';
+                car.style.left=player.x + 'px';
+
+                window.requestAnimationFrame(gamePlay);
+                //console.log(player.score++);
+                player.score++;
+                if(player.score>=highest)
+                {
+                    highest=player.score;
+                }
+                score.innerHTML="Your Score:"+ player.score+"<br><br>"+"Highest Score:"+highest;
+
+
+            }
+            
+        }
+        function Reset(){
+            highest=0;
+        }
+        function start(){
+            //gamearea.classList.remove('hide');
+            startscreen.classList.add('hide');
+            gamearea.innerHTML="";
+
+            player.start=true;
+            player.score=0;
+            window.requestAnimationFrame(gamePlay);
+
+
+
+           for(x=0;x<5;x++){
+                let roadline=document.createElement('div');
+                roadline.setAttribute('class','lines');
+                roadline.y=(x*150);
+                roadline.style.top=roadline.y+'px';
+                gamearea.appendChild(roadline);
+            }
+            
+            let car=document.createElement('div');
+            car.setAttribute('class','car');
+            gamearea.appendChild(car);
+
+            player.x=car.offsetLeft;
+            player.y=car.offsetTop;
+
+
+            for(x=0;x<3;x++){
+                let othercar=document.createElement('div');
+                othercar.setAttribute('class','other');
+                othercar.y=((x+1)*350)* -1;
+                othercar.style.top=othercar.y+'px';
+                othercar.style.left=Math.floor(Math.random()*350) + 'px';
+                gamearea.appendChild(othercar);
+            }
+        }
+        
+    </script>
+</body>
+</html>
+
