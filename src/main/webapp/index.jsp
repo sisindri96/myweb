@@ -1,248 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car game JavaScript</title>
+<html>
+  <head>
+    <title>Simple login form</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <style>
-        *{
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;        
-        }
-        .hide{
-            display: none;
-        }
-        .car{
-            width: 50px;
-            height: 70px;
-            background-color: red;
-            position: absolute;
-            bottom: 120px;
-            background-image: url(Images/car.jpg);
-            background-size: cover;
-        }
-        .GameArea{
-            width: 400px;
-            height: 100vh;
-            background-color: rgb(29, 26, 26);
-            margin: auto;
-            position: relative;
-            overflow: hidden;
-            border-left: 10px dashed white;
-            border-right:10px dashed white;
-        }
-        .lines{
-            width: 10px;
-            height: 100px;
-            background: white;
-            position: absolute;
-            margin-left: 195px;
-        }
-        .CarGame{
-            background-image: url(Images/backgrass.png);
-            background-size: cover;
-
-        }
-        .other{
-            width: 50px;
-            height: 70px;
-            background-color: blue;
-            position: absolute;
-            bottom: 120px;
-        }
-        .Score{
-            position: absolute;
-            top: 15px;
-            left: 50px;
-            text-align: center;
-            padding-top: 23px;
-            font-size: 30px;
-            line-height: 20px;
-            background-color: rgba(34, 119, 8, 0.952);
-            color: white;
-            width: 300px;
-            height: 100px;
-            box-shadow: 0 0 20px 0px rgba(0,0,0,0.1);
-        }
-        .StartScreen{
-            position: absolute;
-            background-color: rgba(34, 119, 8, 0.952);
-            color: white;
-            z-index: 1;
-            margin-top: 210px;
-            margin-left:360px;
-            text-align: center;
-            box-shadow: 0 0 20px 0px rgba(0,0,0,0.1);
-            font-size: 30px;
-            width: 50%;
-            height: 200px;
-            cursor: pointer;
-            border-radius: 23px;
-
-        }
-        button{
-            padding: 10px;
-            text-align: center;
-            background-color: black;
-            color: white;
-        }
+      html, body {
+      display: flex;
+      justify-content: center;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 15px;
+      }
+      form {
+      border: 5px solid #f1f1f1;
+      }
+      input[type=text], input[type=password] {
+      width: 100%;
+      padding: 16px 8px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      }
+      button {
+      background-color: #8ebf42;
+      color: white;
+      padding: 14px 0;
+      margin: 10px 0;
+      border: none;
+      cursor: grabbing;
+      width: 100%;
+      }
+      h1 {
+      text-align:center;
+      fone-size:18;
+      }
+      button:hover {
+      opacity: 0.8;
+      }
+      .formcontainer {
+      text-align: left;
+      margin: 24px 50px 12px;
+      }
+      .container {
+      padding: 16px 0;
+      text-align:left;
+      }
+      span.psw {
+      float: right;
+      padding-top: 0;
+      padding-right: 15px;
+      }
+      /* Change styles for span on extra small screens */
+      @media screen and (max-width: 300px) {
+      span.psw {
+      display: block;
+      float: none;
+      }
     </style>
-</head>
-<body>
-    <div class="CarGame">
-        <div class="Score">
-
-        </div>
-        <div class="StartScreen">
-            <p>Start Game by clicking Here<br><br>Arrow Keys to move<br><br>If you hit another car you will loose</p>
-            <button onclick="Reset()">Reset Highest Score</button>
-        </div>
-        <div class="GameArea">
-
-        </div>
-    </div>       
-    <script>
-        const score=document.querySelector('.Score');
-        const startscreen=document.querySelector('.StartScreen');
-        const gamearea=document.querySelector('.GameArea');
-        let player={ speed:5,score:0};
-        let highest=0;
-        startscreen.addEventListener('click',start);
-
-        let keys={ArrowUp: false, ArrowDown: false, ArrowRight: false, ArrowLeft: false};
-
-        document.addEventListener('keydown',keyDown);
-        document.addEventListener('keyup',keyUp);
-        function keyDown(ev){
-            ev.preventDefault();
-            keys[ev.key]=true;
-
-        }
-        function keyUp(ev){
-            ev.preventDefault();
-            keys[ev.key]=false;
-            
-        }
-        function isCollide(a,b){
-            aRect=a.getBoundingClientRect();
-            bRect=b.getBoundingClientRect();
-
-            return !((aRect.bottom<bRect.top)||(aRect.top>bRect.bottom)||(aRect.right<bRect.left)||(aRect.left>bRect.right));
-        }
-        function moveLines(){
-            let lines=document.querySelectorAll('.lines');
-            lines.forEach(function(item){
-                if(item.y>=700){
-                    item.y-=750;
-                }
-                item.y+=player.speed;
-                item.style.top=item.y+'px';
-
-            })
-        }
-        function endGame(){
-            player.start=false;
-            startscreen.classList.remove('hide');
-        }
-        function moveCar(car){
-            let other=document.querySelectorAll('.other');
-            other.forEach(function(item){
-                if(isCollide(car,item)){
-                    console.log('HIT');
-                    endGame();
-                }
-                if(item.y>=750){
-                    item.y=-300;
-                    item.style.left=Math.floor(Math.random()*350) + 'px';
-                }
-                item.y+=player.speed;
-                item.style.top=item.y+'px';
-
-            })
-        }
-        function gamePlay(){
-
-            let car=document.querySelector('.car');
-            let road=gamearea.getBoundingClientRect();
-
-            if(player.start){
-
-                moveLines();
-                moveCar(car);
-                if(keys.ArrowUp && player.y>(road.top+70)){
-                    player.y-=player.speed;
-                }
-                if(keys.ArrowDown && player.y<(road.bottom-70)){
-                    player.y+=player.speed;
-                }
-                if(keys.ArrowLeft && player.x>0){
-                    player.x-=player.speed;
-                }
-                if(keys.ArrowRight && player.x<(road.width-50)){
-                    player.x+=player.speed;
-                }
-
-                car.style.top=player.y + 'px';
-                car.style.left=player.x + 'px';
-
-                window.requestAnimationFrame(gamePlay);
-                //console.log(player.score++);
-                player.score++;
-                if(player.score>=highest)
-                {
-                    highest=player.score;
-                }
-                score.innerHTML="Your Score:"+ player.score+"<br><br>"+"Highest Score:"+highest;
-
-
-            }
-            
-        }
-        function Reset(){
-            highest=0;
-        }
-        function start(){
-            //gamearea.classList.remove('hide');
-            startscreen.classList.add('hide');
-            gamearea.innerHTML="";
-
-            player.start=true;
-            player.score=0;
-            window.requestAnimationFrame(gamePlay);
-
-
-
-           for(x=0;x<5;x++){
-                let roadline=document.createElement('div');
-                roadline.setAttribute('class','lines');
-                roadline.y=(x*150);
-                roadline.style.top=roadline.y+'px';
-                gamearea.appendChild(roadline);
-            }
-            
-            let car=document.createElement('div');
-            car.setAttribute('class','car');
-            gamearea.appendChild(car);
-
-            player.x=car.offsetLeft;
-            player.y=car.offsetTop;
-
-
-            for(x=0;x<3;x++){
-                let othercar=document.createElement('div');
-                othercar.setAttribute('class','other');
-                othercar.y=((x+1)*350)* -1;
-                othercar.style.top=othercar.y+'px';
-                othercar.style.left=Math.floor(Math.random()*350) + 'px';
-                gamearea.appendChild(othercar);
-            }
-        }
-        
-    </script>
-</body>
+  </head>
+  <body>
+    <form action="/action_page.php">
+      <h1>Login Form</h1>
+      <div class="formcontainer">
+      <hr/>
+      <div class="container">
+        <label for="uname"><strong>Username</strong></label>
+        <input type="text" placeholder="Enter Username" name="uname" required>
+        <label for="psw"><strong>Password</strong></label>
+        <input type="password" placeholder="Enter Password" name="psw" required>
+      </div>
+      <button type="submit">Login</button>
+      <div class="container" style="background-color: #eee">
+        <label style="padding-left: 15px">
+        <input type="checkbox"  checked="checked" name="remember"> Remember me
+        </label>
+        <span class="psw"><a href="#"> Forgot password?</a></span>
+      </div>
+    </form>
+  </body>
 </html>
-
 
 
 
