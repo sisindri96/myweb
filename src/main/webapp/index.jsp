@@ -1,56 +1,81 @@
-<html>
-<head></head>
-<body>
-<h3>Simple Calculator</h3>
-<br/>
-<style>
-#calc{width:300px;height:250px;}
-#btn{width:100%;height:40px;font-size:20px;}
-</style>
-<form Name="calc">
-<table id="calc" border=2>
-<tr>
-<td colspan=5><input id="btn" name="display" onkeypress="return event.charCode >= 48 && event.charCode <= 57" type="text"></td>
-<td style="display:none"><input name="M" type="number"></td>
-</tr>
-<tr>
-<td><input id="btn" type=button value="MC" OnClick="calc.M.value=''"></td>
-<td><input id="btn" type=button value="0" OnClick="calc.display.value+='0'"></td>
-<td><input id="btn" type=button value="1" OnClick="calc.display.value+='1'"></td>
-<td><input id="btn" type=button value="2" OnClick="calc.display.value+='2'"></td>
-<td><input id="btn" type=button value="+" OnClick="calc.display.value+='+'"></td>
-</tr>
-<tr>
-<td><input id="btn" type=button value="MS" OnClick="calc.M.value=calc.display.value"></td>
-<td><input id="btn" type=button value="3" OnClick="calc.display.value+='3'"></td>
-<td><input id="btn" type=button value="4" OnClick="calc.display.value+='4'"></td>
-<td><input id="btn" type=button value="5" OnClick="calc.display.value+='5'"></td>
-<td><input id="btn" type=button value="-" OnClick="calc.display.value+='-'"></td>
-</tr>
-<tr>
-<td><input id="btn" type=button value="MR" OnClick="calc.display.value=calc.M.value"></td>
-<td><input id="btn" type=button value="6" OnClick="calc.display.value+='6'"></td>
-<td><input id="btn" type=button value="7" OnClick="calc.display.value+='7'"></td>
-<td><input id="btn" type=button value="8" OnClick="calc.display.value+='8'"></td>
-<td><input id="btn" type=button value="x" OnClick="calc.display.value+='*'"></td>
-</tr>
-<tr>
-<td><input id="btn" type=button value="M+" OnClick="calc.M.value=(Number(calc.M.value))+(Number(calc.display.value))"></td>
-<td><input id="btn" type=button value="9" OnClick="calc.display.value+='9'"></td>
-<td><input id="btn" type=button value="±" OnClick="calc.display.value=(calc.display.value==Math.abs(calc.display.value)?-(calc.display.value):Math.abs(calc.display.value))">
-</td>
-<td><input id="btn" type=button value="=" OnClick="calc.display.value=eval(calc.display.value)"></td>
-<td><input id="btn" type=button value="/" OnClick="calc.display.value+='/'"></td>
-</tr>
-<tr>
-<td><input id="btn" type=button value="1/x" OnClick="calc.display.value=1/calc.display.value"></td>
-<td><input id="btn" type=button value="." OnClick="calc.display.value+='.'"></td>
-<td><input id="btn" type=button value="x2" OnClick="calc.display.value=Math.pow(calc.display.value,2)"></td>
-<td><input id="btn" type=button value="√" OnClick="calc.display.value=Math.sqrt(calc.display.value)"></td>
-<td><input id="btn" type=button value="C" OnClick="calc.display.value=''"></td>
-</tr>
-</table>
-</form>
-</body>
-</html>
+import java.util.Scanner;
+import java.util.Random;
+public class horsies {
+    public static void main (String[] args) 
+    {
+        Scanner input = new Scanner(System.in);
+        int money = 1000; //Set original $ to 1000
+        int r; //Declare variable for random number of horse to proceed
+        int races = 0; //Set total races to 0
+        int garfwins = 0; //Set Garfield's score to 0
+        int shaunwins = 0; //Set Shaun's score to 0
+        int chestwins = 0; //Set Chester's score to 0
+        int garf; //Declare Garfield's progress variable
+        int shaun; //Declare Shaun's progress variable
+        int chest; //Declare Chester's progress variable
+        String response; //Declare variable to get input on continuing game
+        String horse; //Declare variable to get input on horse
+        String track = "------------";
+        String trackgarf;
+        String trackshaun;
+        String trackchest;
+        int bet = 0;
+        do {
+            garf = 0;
+            shaun = 0;
+            chest = 0;
+            System.out.print ("You have $"+money+"\n");
+            System.out.print ("Hi, which horse would you like to bet on?\n");
+            System.out.print ("a. Garfield ("+garfwins+"/"+races+")\n");
+            System.out.print ("b. Shaun ("+shaunwins+"/"+races+")\n");
+            System.out.print ("c. Chester ("+chestwins+"/"+races+")\n");        
+            horse = input.next();
+            System.out.print ("How much do you want to bet?\n");
+            bet = input.nextInt();
+            if (bet <= 0) {
+                System.out.print ("Invalid bet.\n");
+            }
+            else {
+                while (garf<12 && shaun<12 && chest<12){
+                    r = (int) (Math.random()*3+1);
+                    if (r == 1) {
+                        garf++;
+                    } else if (r == 2) {
+                        shaun++;
+                    } else if (r == 3) {
+                        chest++;
+                    }
+                    System.out.print ("\n\n\n\n\n\n\n\n\n\n\n\n");
+                    trackgarf = track.substring(0, garf)+"1"; //Get Garf's progress on track
+                    trackshaun = track.substring(0, shaun)+"1"; //Get Shaun's progress on track
+                    trackchest = track.substring(0, chest)+"1"; //Get Chester's progress on track
+                    System.out.print (trackgarf+"\n");
+                    System.out.print (trackshaun+"\n");
+                    System.out.print (trackchest+"\n");
+                    System.out.print ("GAR:"+garf+"\nSHA:"+shaun+"\nCHE:"+chest+"\n");
+                    try {
+                          Thread.sleep(1000L);
+                            }
+                        catch (Exception j) {}
+                }
+            }
+            if (garf == 12 && horse == "a") {
+                System.out.print ("You earned $"+(2*bet));
+                money = money + (2 * bet);
+                System.out.print ("Total balance: $"+money);
+            } else if (shaun == 12 && horse == "b") {
+                System.out.print ("You earned $"+(2*bet));
+                money = money + (2 * bet);
+                System.out.print ("Total balance: $"+money);
+            } else if (chest == 12 && horse == "c") {
+                System.out.print ("You earned $"+(2*bet));
+                money = money + (2 * bet);
+                System.out.print ("Total balance: $"+money);
+            }
+            System.out.print ("Play again?\n");
+            response = input.next();
 
+        } while (money >= 0 && (response.equals("Yes")||response.equals("yes")));
+        input.close();
+        }
+}
