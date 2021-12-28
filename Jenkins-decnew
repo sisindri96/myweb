@@ -20,7 +20,33 @@ pipeline{
             steps{
                 sshagent(['tomcat-new']) {
                 sh """
-                    scp -o StrictHostKeyChecking=no target/myweb.war  ec2-user@172.31.89.147:/home/ec2-user/apache-tomcat-9.0.48/webapps/
+                    scp -o StrictHostKeyChecking=-----BEGIN RSA PRIVATE KEY-----
+MIIEoAIBAAKCAQEAhkMdKPnSEcM+aLMeXUOb/zBocwICygB0Plgez5ZPeEpGb3sF
+3OQ3YfkozvplsGzmTcJvKNFF4UoxefdKTGjjV0wWSbnonX6dE/a3xsyF/sBGFEFW
+OFOulyEicxUiE0dPUpnhi0NJdCm5oWZP+mkt+GFPKeDKQx6Gz1KiqdxBShfC5YeY
+irrMt9xLesUEd9HAZkD/8+jtz/YFlDyoA5yGtm7L1t/3UXmSKyzi3AbW5J73l6il
+Ca4INg13j8cBTztQ1ew5ADUd0ijt+RbN/NGC/v8vzRN3GSGfhEBQ3/KsOJIPBNBi
+HELiQM0xkQqhSt7832qIMe8+PoayVlxIUGSeTQIDAQABAoIBACuAP0hxeQDMU8I0
+ltf8+eQ62Py6YBD3CLLSdlkoCGOfHSctov6o6tDRm8lEFAKPpib3onCFLbELCvDL
+kMUlDtPQEUCd/aJZzacUPwMobRnXTl1ttfPWGTFaSQEkjb/VUPwgY5VtnbUHd9+1
+eKBXx888KBwXezE4CNHPomiKtpS8mSd/f/wPAzSlh7XrhmpkE6J7Jrjrsb4M9Pe4
+mP9zjvxy0+BZqUzgtg9nbabOTMjtxbOgHzCOQ5oZPH1Z9A5tIHWEhHcnIcC+FGP2
+Be7psnxNLFvrlcBVeGhuKZren+5GdYM3XXJGwBqboTg60p5zQ3vOMNC0yUEdADJq
+fIRH4cECgYEA0PYO5k3gc5AznE2lCRmdZt/CT6bzcl89bP7e7O6ZMo/4Y1VU9jTS
+LsTqd447yU8DVzl7aBHz2i3lVZIjY08ek9szKiKqYqfyVP7FXHLRfmqoqsnGRIlT
+ShV+ITCHrA4ZelgzzOV+KS2lZQ/+UlmpN/taourj7ZPTcZbphNfq0FUCgYEApHxT
+1bZRi0nXXIB9gmXRaq/D/zge8oKB69XASwghXglDyusKLTsbhpobZIyz4te3kKE8
+LY1BCbC3Lw1zkY3OSlFYtKQo2TXWYD27JypgEHeA+SwyVyQbGSc15pB6qfpQaYqU
+IrWGOCd8PfpnllLFC4blbSnZWt4UlBASTZ/rLhkCgYAKwF5L4z3lNEozhJs1OKgs
+nt60knZ8MAJNFWAK+MvRGi9BjSZt9JHL7j3SIPNajEIzvrVmyWWumCXwnTBM78k2
++lRLmrUBlnqVfPZSp2W4B2zePLuC0z4B1dFDi+evJpqQ/PDNXhF7tOmJpaUEP7DB
+PKGROFy54J1EfutM9n8ScQKBgAIIb1jS2gsorHq+M87qxz3UUk3TOb6xkj2B9NB4
+l0D8SFQ3t3Z7polxWilR+98v31rwQzgk6Mrf3kO8nNMNt6D/hGMnLEITAkVKPgfr
+5CgP8g4iV7TwA026SFZDLuDu8RN83PvY1oHXKxfxAlq/RyQvVKKWw9L1r7dsw20m
+LtfxAn8l67+bGWMzmsPVLwAijUt9rcmaH+t2ZDwOgTyWPaJOU+m69FIqya5ZHGAq
+0qMkZn1OBM83X7zFUmrlFlyGltufP4nog5NSVRs8tq2r9DqdvYAGULpors0/oiFi
+xsprZOh9q/2UPAVt+fVcppSVWk6Hy0agr8RqmjH+yUwEianB
+-----END RSA PRIVATE KEY----- target/myweb.war  ec2-user@172.31.89.147:/home/ec2-user/apache-tomcat-9.0.48/webapps/
                     
                     ssh ec2-user@172.31.89.147 /home/ec2-user/apache-tomcat-9.0.48/bin/shutdown.sh
                     
